@@ -1,0 +1,21 @@
+iptables -t nat -A POSTROUTING -o vmbr0 -j MASQUERADE
+iptables -A FORWARD -i eth2 -j ACCEPT
+
+
+auto lo
+iface lo inet loopback
+
+auto vmbr0
+iface vmbr0 inet static
+	address 192.168.2.221
+	netmask 255.255.255.0
+	gateway 192.168.2.1
+	bridge_ports eth3
+	bridge_stp off
+	bridge_fd 0
+
+auto eth2
+iface eth2 inet static
+        address 192.168.32.1
+        netmask 255.255.255.0
+        gateway 192.168.2.1
